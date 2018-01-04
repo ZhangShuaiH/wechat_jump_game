@@ -35,8 +35,8 @@ sample_board_x1, sample_board_y1, sample_board_x2, sample_board_y2 = 813, 1122, 
 
 
 def pull_screenshot():
-    os.system('adb shell screencap -p /sdcard/1.png')
-    os.system('adb pull /sdcard/1.png .')
+    os.system('adb shell screencap -p /sdcard/1.png') # 手机截屏,并将截屏图片保存到手机的文件夹 sdcard 里面
+    os.system('adb pull /sdcard/1.png .') # 将 1.png 保存到电脑中,与本源码文件所在路径一样
 
 
 def backup_screenshot(ts):
@@ -44,7 +44,7 @@ def backup_screenshot(ts):
     dir_path = 'screenshot_backups/'
     if not os.path.isdir(dir_path):
         os.mkdir(dir_path)
-    os.system('cp 1.png {}{}.png'.format(dir_path, ts))
+    os.system('cp 1.png {}{}.png'.format(dir_path, ts)) # 拷贝 1.png 到 dir_path 下, 并命名为 0123456789.png, 0123456789是一个时间戳
 
 
 def jump(distance):
@@ -115,7 +115,7 @@ def main():
         im = Image.open("./1.png")
         # 获取棋子和 board 的位置
         piece_x, piece_y, board_x, board_y = find_piece_and_board(im)
-        ts = int(time.time())
+        ts = int(time.time()) # 一个十位数的时间戳
         print(ts, piece_x, piece_y, board_x, board_y)
         jump(math.sqrt(abs(board_x - piece_x) ** 2 + abs(board_y - piece_y) ** 2))
         backup_screenshot(ts)
